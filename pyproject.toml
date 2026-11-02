@@ -1,0 +1,22 @@
+[project]
+name = "nhefs-decision-intelligence"
+version = "1.0.0"
+description = "TP Integrador EAyMR 2026 (UCA): inferencia, ML y causalidad sobre NHEFS"
+requires-python = ">=3.12"
+authors = [{ name = "Camilo Garcia Placeres" }]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning", "ignore::UserWarning"]
+markers = ["slow: pruebas que reentrenan modelos (excluir con -m 'not slow')"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py312"
+extend-exclude = ["notebooks/*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501", "B905"]
