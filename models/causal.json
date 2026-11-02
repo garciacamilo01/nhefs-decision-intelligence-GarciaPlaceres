@@ -9,10 +9,10 @@
   ]
  },
  "ols": {
-  "ate": 3.3488237857996106,
+  "ate": 3.3488237857996173,
   "ic": [
-   2.4830487529742773,
-   4.214598818624944
+   2.483048752974284,
+   4.214598818624952
   ]
  },
  "ipw": {
@@ -21,7 +21,7 @@
    2.3653600279485434,
    4.33652467970746
   ],
-  "ate_dowhy": 3.052435581498685
+  "ate_dowhy": 3.0611264165774466
  },
  "ipcw": {
   "ate": 3.349256710997771
@@ -50,19 +50,19 @@
  },
  "refutaciones": {
   "Causa común aleatoria": {
-   "efecto_nuevo": 3.349715237358794,
+   "efecto_nuevo": 3.349715237358796,
    "p_valor": 0.8999999999999999,
    "condicion_ok": true,
    "semaforo": "verde"
   },
   "Tratamiento placebo": {
-   "efecto_nuevo": -0.031990365626852035,
+   "efecto_nuevo": -0.031990365626853055,
    "p_valor": 0.88,
    "condicion_ok": true,
    "semaforo": "verde"
   },
   "Subconjunto de datos (80%)": {
-   "efecto_nuevo": 3.3341530555270724,
+   "efecto_nuevo": 3.3341530555270706,
    "p_valor": 0.98,
    "condicion_ok": true,
    "semaforo": "verde"
@@ -5582,5 +5582,5 @@
    "peso82_observado": "Peso 82 observado (S)"
   }
  },
- "estimando": "Estimand type: EstimandType.NONPARAMETRIC_ATE\n\n### Estimand : 1\nEstimand name: backdoor\nEstimand expression:\n   d                                                                           ↪\n───────(E[wt_82_71|sex,wt71,active,education,smokeyrs,age,smokeintensity,race, ↪\nd[qsmk]                                                                        ↪\n\n↪           \n↪ exercise])\n↪           \nEstimand assumption 1, Unconfoundedness: If U→{qsmk} and U→wt82_71 then P(wt82_71|qsmk,sex,wt71,active,education,smokeyrs,age,smokeintensity,race,exercise,U) = P(wt82_71|qsmk,sex,wt71,active,education,smokeyrs,age,smokeintensity,race,exercise)\n\n"
+ "estimando": "Estimand type: EstimandType.NONPARAMETRIC_ATE\n\n### Estimand : 1\nEstimand name: backdoor\nEstimand expression:\n   d                                                                           ↪\n───────(E[wt_82_71|sex,age,smokeyrs,exercise,smokeintensity,race,education,act ↪\nd[qsmk]                                                                        ↪\n\n↪           \n↪ ive,wt71])\n↪           \nEstimand assumption 1, Unconfoundedness: If U→{qsmk} and U→wt82_71 then P(wt82_71|qsmk,sex,age,smokeyrs,exercise,smokeintensity,race,education,active,wt71,U) = P(wt82_71|qsmk,sex,age,smokeyrs,exercise,smokeintensity,race,education,active,wt71)\n\n"
 }

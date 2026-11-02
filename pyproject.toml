@@ -15,7 +15,7 @@ markers = ["slow: pruebas que reentrenan modelos (excluir con -m 'not slow')"]
 [tool.ruff]
 line-length = 140
 target-version = "py312"
-extend-exclude = ["notebooks/*.ipynb"]
+extend-exclude = ["notebooks/*.ipynb", "slides"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]

@@ -187,7 +187,7 @@ elif modulo.startswith("3"):
         roles, labels = CAUSAL["dag"]["roles"], CAUSAL["dag"]["labels"]
         latentes = {"ingesta_metabolismo", "conciencia_salud"}
         nodos = {n for e in CAUSAL["dag"]["edges"] for n in e}
-        dot = ["digraph { rankdir=LR; node [style=filled, fontname=Helvetica, fontsize=10];"]
+        dot = ["digraph { rankdir=LR; ranksep=0.35; nodesep=0.12; node [style=filled, fontname=Helvetica, fontsize=16];"]
         for n in nodos:
             estilo = "dashed,filled" if n in latentes else "filled"
             dot.append(f'"{n}" [label="{labels.get(n, n)}", fillcolor="{COLOR_ROL.get(roles.get(n), "#ffffff")}", style="{estilo}"];')

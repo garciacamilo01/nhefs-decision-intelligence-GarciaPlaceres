@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>NHEFS · Decision Intelligence</title>
+<style>
+@page { size: 1280px 720px; margin: 0; }
+:root { --ink:#1f2933; --muted:#616e7c; --acc:#d9480f; --acc2:#1c7ed6; --line:#e4e7eb; --soft:#f5f7fa; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Inter, sans-serif; color: var(--ink); background: #fff; }
+.s { width: 1280px; height: 720px; padding: 52px 64px 40px; position: relative; page-break-after: always; overflow: hidden; display: flex; flex-direction: column; }
+.s:last-child { page-break-after: auto; }
+.k { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: var(--acc); font-weight: 700; margin-bottom: 10px; }
+h1 { font-size: 40px; line-height: 1.15; font-weight: 700; letter-spacing: -.01em; max-width: 1100px; }
+h2 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+p, li { font-size: 19px; line-height: 1.45; color: #323f4b; }
+ul { padding-left: 22px; } li { margin-bottom: 7px; }
+#s7 li { font-size: 17px; }
+.sub { color: var(--muted); font-size: 20px; margin-top: 12px; max-width: 1050px; }
+.body { flex: 1; display: grid; gap: 36px; margin-top: 26px; min-height: 0; }
+.c2 { grid-template-columns: 1fr 1fr; } .c32 { grid-template-columns: 1.35fr 1fr; } .c23 { grid-template-columns: 1fr 1.35fr; }
+img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+.fig { display: flex; align-items: center; justify-content: center; min-height: 0; }
+.big { font-size: 64px; font-weight: 700; color: var(--acc); line-height: 1; }
+.big small { font-size: 24px; color: var(--muted); font-weight: 500; }
+.stat { border-left: 4px solid var(--acc); padding: 4px 0 4px 18px; margin-bottom: 22px; }
+.stat .l { font-size: 15px; color: var(--muted); margin-top: 6px; }
+.note { background: var(--soft); border-radius: 10px; padding: 14px 18px; font-size: 17px; line-height: 1.45; color: #323f4b; }
+.foot { position: absolute; bottom: 18px; left: 64px; right: 64px; display: flex; justify-content: space-between; font-size: 12px; color: #9aa5b1; }
+table { border-collapse: collapse; width: 100%; font-size: 17px; }
+td, th { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+th { color: var(--muted); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: .05em; }
+td.n { text-align: right; font-variant-numeric: tabular-nums; }
+.dot { display:inline-block; width:14px; height:14px; border-radius:50%; background:#2f9e44; margin-right:8px; vertical-align:-1px; }
+.cover { background: #1f2933; color: #fff; justify-content: center; }
+.cover h1 { font-size: 54px; color: #fff; } .cover .sub { color: #cbd2d9; font-size: 22px; }
+.cover .meta { margin-top: 60px; color: #9aa5b1; font-size: 17px; line-height: 1.7; }
+.q { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 30px; }
+.q > div { border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
+.tag { display:inline-block; font-size:13px; font-weight:700; letter-spacing:.08em; padding:4px 10px; border-radius:20px; background:#fff0e6; color:var(--acc); margin-bottom:12px; }
+.tag.b { background:#e7f5ff; color:var(--acc2); }
+.shots { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 22px; }
+.shots img { border: 1px solid var(--line); border-radius: 8px; }
+.shots p { font-size: 15px; margin-top: 8px; }
+</style></head><body>
+
+<!-- 1 -->
+<section class="s cover">
+  <div class="k">Trabajo Práctico Integrador · Decision Intelligence Capstone</div>
+  <h1>Dejar de fumar: ¿cuánto peso se gana y quién está en riesgo?</h1>
+  <p class="sub">Inferencia, aprendizaje automático y causalidad sobre la cohorte NHEFS (1971–1992, N = 1.629 fumadores)</p>
+  <div class="meta">Camilo Garcia Placeres · EAyMR 2026 · UCA<br>Proyecto individual: Project Lead, Backend / ML-Causal, Frontend y QA</div>
+</section>
+
+<!-- 2 -->
+<section class="s">
+  <div class="k">1 · Problema</div>
+  <h1>Un programa de cesación tabáquica necesita dos respuestas distintas</h1>
+  <div class="q">
+    <div><span class="tag b">WHAT-IS · PREDICTIVA</span><h2>¿A quién priorizar?</h2>
+      <p>Probabilidad de morir en 1983–92 a partir de una entrevista inicial. El presupuesto es limitado y conviene empezar por los de mayor riesgo.</p>
+      <p style="margin-top:12px;color:var(--muted)">Objetivo: <b>death</b> · prevalencia 19,5%</p></div>
+    <div><span class="tag">WHAT-IF · CAUSAL</span><h2>¿Cuánto peso <i>causa</i> dejar de fumar?</h2>
+      <p>El miedo a engordar frena la cesación. Para dimensionar el apoyo nutricional hace falta el efecto de la intervención, no la diferencia observada.</p>
+      <p style="margin-top:12px;color:var(--muted)">E[Y | do(T=1)] − E[Y | do(T=0)] · Y = cambio de peso 1971→82</p></div>
+  </div>
+  <p class="note" style="margin-top:26px">Restricciones: datos observacionales, 3,9% sin peso en 1982 (censura que <b>no</b> es MCAR, p = 0,0002), cambio de cuestionario a mitad del estudio (791 respuestas faltantes por diseño) y sin datos de dieta.</p>
+  <div class="foot"><span>NHEFS · Decision Intelligence</span><span>2</span></div>
+</section>
+
+<!-- 3 -->
+<section class="s">
+  <div class="k">2 · Inferencia clásica</div>
+  <h1>Quienes dejaron de fumar ganaron 2,5 kg más… pero no son comparables</h1>
+  <div class="body c32">
+    <div class="fig"><img src="img/f_peso.png"></div>
+    <div>
+      <div class="stat"><div class="big">+2,54 <small>kg</small></div><div class="l">Welch t = 5,21 (616 gl) · p = 2,6·10⁻⁷ · IC 95% [1,58; 3,50] · d = 0,33</div></div>
+      <ul>
+        <li>Se usa Welch porque los grupos son desbalanceados (403 vs. 1.163).</li>
+        <li>Los que dejaron eran <b>3,4 años mayores</b> (p &lt; 0,001) y fumaban <b>2,6 cig/día menos</b> (Mann-Whitney p &lt; 0,001).</li>
+        <li>Potencia ≈ 1. Para detectar 1 kg harían falta 976 personas por grupo.</li>
+      </ul>
+      <p class="note" style="margin-top:14px">Hipótesis H-a (autoselección) confirmada: la diferencia cruda mezcla efecto y composición.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Fase 1</span><span>3</span></div>
+</section>
+
+<!-- 4 -->
+<section class="s">
+  <div class="k">2 · ANOVA, Gauss-Markov y PCA</div>
+  <h1>Los supuestos fallan donde importa, y se corrige en consecuencia</h1>
+  <div class="body" style="grid-template-columns: 1fr 1fr 1fr; gap: 28px;">
+    <div><h2>ANOVA por educación</h2><div class="fig" style="height:220px"><img src="img/f_anova.png"></div>
+      <p style="font-size:16px;margin-top:8px">Levene p = 0,014 → <b>ANOVA de Welch</b> F = 4,21, p = 0,002 (η² = 0,011). Bonferroni-Welch: solo ≤8.º difiere de Sec. completo y Univ. incompleto.</p></div>
+    <div><h2>Regresión OLS (Gauss-Markov)</h2>
+      <table><tr><th>Supuesto</th><th>Diagnóstico</th></tr>
+        <tr><td>Homocedasticidad</td><td>BP = 81,5 → <b>HC3</b></td></tr>
+        <tr><td>Normalidad</td><td>JB = 1.104 → Huber RLM</td></tr>
+        <tr><td>Independencia</td><td>DW = 2,01 ✓</td></tr>
+        <tr><td>Influencia</td><td>Cook máx. 0,03 ✓</td></tr>
+        <tr><td>Colinealidad</td><td>VIF 7,7 → <b>&lt; 2,4</b></td></tr></table>
+      <p style="font-size:16px;margin-top:10px">qsmk: +3,21 kg (EE HC3 0,49); con Huber, +2,81 kg.</p></div>
+    <div><h2>PCA (ajustado solo en train)</h2><div class="fig" style="height:220px"><img src="img/f_pca.png"></div>
+      <p style="font-size:16px;margin-top:8px">Kaiser retiene 3 componentes (63,7%). PC1 = envejecimiento y exposición acumulada; ahí se concentran las muertes.</p></div>
+  </div>
+  <div class="foot"><span>Fase 1–2</span><span>4</span></div>
+</section>
+
+<!-- 5 -->
+<section class="s">
+  <div class="k">3 · Torneo predictivo</div>
+  <h1>Gana el modelo más simple: logística regularizada</h1>
+  <div class="body c32">
+    <div class="fig"><img src="img/f_torneo.png"></div>
+    <div>
+      <ul>
+        <li>CV estratificada de 5 pliegues. Se elige por <b>Brier</b> porque las probabilidades se usan para priorizar.</li>
+        <li><b>CART</b> sin podar: 180 hojas, AUC 1,00 en train y 0,62 en test. Podado (α = 0,0031) queda con 7 hojas y primer corte en edad ≤ 54,5.</li>
+        <li><b>Random Forest</b> (600 árboles): AUC OOB estable desde ~200 árboles. No supera a la logística.</li>
+        <li><b>Naive Bayes</b> queda peor que la línea base: la independencia condicional no se cumple.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>Fase 3</span><span>5</span></div>
+</section>
+
+<!-- 6 -->
+<section class="s">
+  <div class="k">3 · Calibración y explicabilidad</div>
+  <h1>Las probabilidades del modelo se pueden tomar al pie de la letra</h1>
+  <div class="body c23">
+    <div class="fig"><img src="img/f_calib.png"></div>
+    <div>
+      <table><tr><th>Test (n = 326, 64 muertes)</th><th style="text-align:right">Valor</th></tr>
+        <tr><td>AUC-ROC</td><td class="n"><b>0,847</b></td></tr>
+        <tr><td>PR-AUC (línea base 0,196)</td><td class="n">0,547</td></tr>
+        <tr><td>Brier (línea base 0,158)</td><td class="n"><b>0,117</b></td></tr></table>
+      <ul style="margin-top:18px">
+        <li>Calibración sigmoide con CV. Naive Bayes calibrado mejora de 0,230 a 0,139 de Brier, pero sigue atrás.</li>
+        <li>Importancia por permutación: <b>edad, años fumando y sexo</b>. MDI sobrevalora una variable de ruido continua (0,0245 vs. 0,0043 de una binaria).</li>
+        <li>OR edad 1,085 por año; mujer 0,615.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>Fase 3</span><span>6</span></div>
+</section>
+
+<!-- 7 -->
+<section class="s">
+  <div class="k">4 · Modelo causal</div>
+  <h1>El DAG dice qué ajustar, y qué no tocar</h1>
+  <div class="fig" style="height:380px;margin-top:14px"><img src="img/f_dag.png"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:14px"><ul style="font-size:17px">
+    <li>31 caminos T–Y: 1 causal, 17 de puerta trasera y 13 bloqueados por colisionadores.</li>
+    <li>Conjunto mínimo backdoor <b>único</b>: los 9 confusores de 1971 (verificado por d-separación).</li>
+    <li>Supuesto crítico: no hay un U no medido (por ejemplo, conciencia de salud).</li></ul><ul>
+    <li><b>Presión 1982</b>: colisionador post-tratamiento. No se ajusta.</li>
+    <li><b>Precio del tabaco</b>: instrumento débil (F = 0,38). Se descarta la vía IV.</li>
+    <li>Mediador (dieta) latente: no afecta al efecto total.</li></ul></div>
+  <div class="foot"><span>Fase 4</span><span>7</span></div>
+</section>
+
+<!-- 8 -->
+<section class="s">
+  <div class="k">4 · ATE, CATE y refutaciones</div>
+  <h1>Dejar de fumar causa +3,4 kg; el ingenuo subestimaba 0,8 kg</h1>
+  <div class="body c2" style="gap:30px">
+    <div>
+      <div class="fig" style="height:230px"><img src="img/f_ate.png"></div>
+      <table style="margin-top:14px"><tr><th>Refutación DoWhy</th><th style="text-align:right">Nuevo efecto</th><th style="text-align:right">p</th></tr>
+        <tr><td><span class="dot"></span>Causa común aleatoria</td><td class="n">3,350</td><td class="n">0,90</td></tr>
+        <tr><td><span class="dot"></span>Tratamiento placebo</td><td class="n">−0,032</td><td class="n">0,88</td></tr>
+        <tr><td><span class="dot"></span>Subconjunto 80%</td><td class="n">3,334</td><td class="n">0,98</td></tr></table>
+    </div>
+    <div>
+      <div class="fig" style="height:260px"><img src="img/f_cate.png"></div>
+      <p style="font-size:17px;margin-top:10px">CATE (LinearDML) = 3,21 + 0,044·cig − 0,011·edad. Los IC de ambos coeficientes incluyen al 0: <b>no hay evidencia para diferenciar por perfil</b>.</p>
+      <p class="note" style="margin-top:10px;font-size:16px">Robustez: IPCW 3,35 · OLS flexible 3,46 · IPW-DoWhy 3,05. Todas las estimaciones válidas caen entre 3,05 y 3,62 kg.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Fase 4</span><span>8</span></div>
+</section>
+
+<!-- 9 -->
+<section class="s">
+  <div class="k">5 · Web app (Streamlit Community Cloud)</div>
+  <h1>Tres módulos para decidir, no solo para mirar</h1>
+  <div class="shots">
+    <div><img src="img/app_m1.png"><p><b>1 · Diagnóstico.</b> Filtros, distribuciones y proyección de un caso sobre PC1 × PC2.</p></div>
+    <div><img src="img/app_m2.png"><p><b>2 · What-Is.</b> Probabilidad calibrada, rango entre los 5 modelos de la CV y explicación local.</p></div>
+    <div><img src="img/app_m3.png"><p><b>3 · What-If.</b> DAG, ATE, CATE por perfil, semáforo de refutaciones y simulador de kg para el programa.</p></div>
+  </div>
+  <p class="note" style="margin-top:22px">La app solo lee artefactos de <code>/models</code>, generados por el mismo pipeline que el notebook. Una prueba verifica que reproducen el AUC exacto. 36 pruebas en CI (ruff + pytest).</p>
+  <div class="foot"><span>Demo en vivo: URL-DE-LA-APP.streamlit.app</span><span>9</span></div>
+</section>
+
+<!-- 10 -->
+<section class="s">
+  <div class="k">6 · Predicción ≠ palanca causal</div>
+  <h1>En el modelo de mortalidad, “dejar de fumar” parece dañino</h1>
+  <div class="body c2">
+    <div>
+      <div class="stat"><div class="big">+5,8 <small>p.p. crudo</small></div><div class="l">Mortalidad de quienes dejaron vs. quienes siguieron</div></div>
+      <div class="stat" style="border-color:var(--acc2)"><div class="big" style="color:var(--acc2)">+0,5 <small>p.p. ajustado</small></div><div class="l">IC 95% [−3,4; +4,5]: sin efecto distinguible de 0</div></div>
+    </div>
+    <div>
+      <p>Es el efecto <b>sick quitter</b>: dejan de fumar quienes son mayores o ya recibieron un diagnóstico. El modelo predictivo usa esa asociación legítimamente para <i>predecir</i>, pero leerla como palanca llevaría a la recomendación opuesta a la correcta.</p>
+      <p class="note" style="margin-top:20px">Regla del proyecto: el Módulo 2 se usa para <b>priorizar</b>, el Módulo 3 para <b>intervenir</b>. Nunca al revés.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Ensayo crítico</span><span>10</span></div>
+</section>
+
+<!-- 11 -->
+<section class="s">
+  <div class="k">7 · Conclusiones</div>
+  <h1>Recomendaciones para el programa</h1>
+  <div class="body c2">
+    <div><ul>
+      <li><b>Comunicar</b> que dejar de fumar causa en promedio ≈ 3,4 kg en 11 años (IC 2,5–4,2). Es una cifra realista y acotada.</li>
+      <li><b>Dimensionar</b> el apoyo nutricional con el ATE para toda la población: la evidencia no permite segmentar por intensidad ni por edad.</li>
+      <li><b>Priorizar</b> el seguimiento con el modelo calibrado. Los factores de riesgo dominantes son edad, años fumando y sexo masculino.</li>
+    </ul></div>
+    <div><h2>Limitaciones</h2><ul>
+      <li>El confusor no observado (conciencia de salud) no se puede refutar con estos datos.</li>
+      <li>El mediador (dieta) no está medido: no se puede separar el efecto directo del indirecto.</li>
+      <li>La validez externa se limita a adultos de EE. UU. en los años 70.</li>
+    </ul></div>
+  </div>
+  <div class="foot"><span>Conclusiones</span><span>11</span></div>
+</section>
+
+<!-- 12 -->
+<section class="s">
+  <div class="k">8 · Bitácora y trazabilidad</div>
+  <h1>Qué falló, qué se decidió y cómo se usó la IA</h1>
+  <div class="body c2">
+    <div><h2>Bitácora (5 entradas, firmadas por rol)</h2><ul>
+      <li>Encuadre estratégico y matriz de decisiones estadísticas.</li>
+      <li>Autopsia con 4 experimentos fallidos: CART sin podar, Naive Bayes descalibrado, dummies colineales (IC = NaN) e instrumento débil.</li>
+      <li>Debate causal: colisionador, mediador latente y <i>sick quitter</i>.</li>
+    </ul></div>
+    <div><h2>Uso de IA generativa</h2><ul>
+      <li>Desarrollado con asistencia de <b>Claude (Anthropic)</b> para código, textos y estructura.</li>
+      <li>5 errores de la IA detectados y corregidos; están registrados en la Entrada 5.</li>
+      <li>Pruebas deterministas: el IPW recupera un efecto simulado de 5 kg, valores de referencia del ATE, reproducibilidad con semilla y anti-fuga de datos.</li>
+    </ul></div>
+  </div>
+  <p class="note">Repositorio: github.com/USUARIO/REPO · Notebook, app, tests y bitácora reproducibles con <code>SEED = 42</code>.</p>
+  <div class="foot"><span>Referencias: Hernán y Robins (2020) · Pearl (2009) · Sharma y Kiciman (2020) · Chernozhukov et al. (2018)</span><span>12</span></div>
+</section>
+</body></html>
